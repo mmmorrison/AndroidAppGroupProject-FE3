@@ -19,12 +19,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="VOTE!"
+            android:text="Decide"
             android:id="@+id/splash_vote"
             android:layout_gravity="center"
             android:textSize="80sp"
-            android:textColor="#f4ab17"
-            android:textIsSelectable="false" />
+            android:textColor="#f3a301"
+            android:textIsSelectable="false"
+            />
 
 
     </FrameLayout>
@@ -48,7 +49,6 @@
         <ImageButton
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-
             android:id="@+id/fashion_b"
             android:src="@drawable/fashion_b"
             />
@@ -57,11 +57,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Ask!"
-            android:id="@+id/splash_vote"
+            android:text="My Decisions"
+            android:id="@+id/splash_myDecisions"
             android:layout_gravity="center"
+            android:textAlignment="center"
             android:textSize="80sp"
-            android:textColor="#67678a" />
+            android:textColor="#00519a"
+            />
 
     </FrameLayout>
 
