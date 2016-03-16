@@ -3,31 +3,69 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <ImageButton
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/fashion_a"
+            android:src="@drawable/fashion_a"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="VOTE!"
+            android:id="@+id/splash_vote"
+            android:layout_gravity="center"
+            android:textSize="80sp"
+            android:textColor="#f4ab17"
+            android:textIsSelectable="false" />
 
 
-    <ImageButton
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="1"
-        android:id="@+id/fashion_a"
-        android:src="@drawable/fashion_a"
-        />
-
-    <ImageButton
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="1"
-        android:id="@+id/fashion_b"
-        android:src="@drawable/fashion_b"
-        />
+    </FrameLayout>
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
-        android:id="@+id/textView"
+        android:text="@string/brand_name"
+        android:id="@+id/app_title"
         android:layout_gravity="center_horizontal"
-        />
+        android:background="#3a3536"
+        android:textSize="40sp"
+        android:textColor="#f4ab17"
+        android:textAlignment="center" />
+
+    <FrameLayout android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <ImageButton
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+
+            android:id="@+id/fashion_b"
+            android:src="@drawable/fashion_b"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Ask!"
+            android:id="@+id/splash_vote"
+            android:layout_gravity="center"
+            android:textSize="80sp"
+            android:textColor="#67678a" />
+
+    </FrameLayout>
+
+
+
 
 </LinearLayout>
