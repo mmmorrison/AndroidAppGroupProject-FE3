@@ -21,13 +21,15 @@
         <activity
             android:name=".index"
             android:label="@string/title_activity_index"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".DecideActivity"
             android:label="@string/title_activity_decide"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".NewSetActivity"
+            android:label="@string/title_activity_new_set"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

@@ -5,4 +5,5 @@
     <string name="brand_name">Decidatron</string>
     <string name="title_activity_index">index</string>
     <string name="title_activity_decide">DecideActivity</string>
+    <string name="title_activity_new_set">NewSetActivity</string>
 </resources>
