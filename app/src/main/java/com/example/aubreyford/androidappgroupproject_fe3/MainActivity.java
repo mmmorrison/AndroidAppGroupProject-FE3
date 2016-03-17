@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.ImageButton;
+import android.util.Log;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,57 +35,41 @@ public class MainActivity extends AppCompatActivity {
         appTitle.setTypeface(guldScript);
         IndexNavListener();
         DecideNavListener();
+        Log.i("checkit", "**************");
     }
 
 
 
 
 
-        public void IndexNavListener() {
+    public void IndexNavListener() {
             index_nav = (ImageButton) findViewById(R.id.fashion_b);
 
-            index_nav.setOnClickListener(
-
-                    new View.OnClickListener() {
+            index_nav.setOnClickListener(new View.OnClickListener() {
 
                         @Override
-                        public void onClick(View v) {
-
-                            Intent intent = new Intent("com.example.aubreyford.androidappgroupproject_fe3.index");
+                        public void onClick(View view) {
+                            Intent intent = new Intent(view.getContext(), index.class);
                             startActivity(intent);
-
                         }
-
-                    }
-
-            );
+            });
         }
 
 
-        public void DecideNavListener() {
+    public void DecideNavListener() {
             decide_nav = (ImageButton) findViewById(R.id.fashion_a);
 
-            decide_nav.setOnClickListener(
-
-                    new View.OnClickListener() {
+            decide_nav.setOnClickListener(new View.OnClickListener() {
 
                         @Override
-                        public void onClick(View v){
-
-                            Intent intent = new Intent("com.example.aubreyford.androidappgroupproject_fe3.DecideActivity");
+                        public void onClick(View view){
+//                            Intent intent = new Intent("com.example.aubreyford.androidappgroupproject_fe3.DecideActivity");
+                            Intent intent = new Intent(view.getContext(), DecideActivity.class);
                             startActivity(intent);
-
                         }
 
-                    }
-
-            );
+            });
         }
-
-
-
-
-
 
 
 

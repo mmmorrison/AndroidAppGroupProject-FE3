@@ -22,21 +22,11 @@
             android:name=".index"
             android:label="@string/title_activity_index"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="com.example.aubreyford.androidappgroupproject_fe3.index" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".DecideActivity"
             android:label="@string/title_activity_decide"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="com.example.aubreyford.androidappgroupproject_fe3.DecideActivity" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
         </activity>
     </application>
 
