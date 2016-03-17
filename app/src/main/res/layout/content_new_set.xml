@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:text="Take Picture A"
         android:id="@+id/picButton_A"
-        android:layout_marginStart="25dp"
+        android:layout_marginStart="24dp"
         android:layout_below="@+id/linearLayout"
         android:layout_alignParentStart="true" />
 
@@ -25,8 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Take Picture B"
-        android:id="@+id/picButton_A"
-
+        android:id="@+id/picButton_B"
         android:layout_marginEnd="24dp"
         android:layout_below="@+id/linearLayout"
         android:layout_alignParentEnd="true" />
@@ -35,26 +34,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/newTitle"
-        android:layout_below="@+id/textView2"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="10dp" />
+        android:layout_marginBottom="24dp"
+        android:layout_above="@+id/new_submit"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="35dp"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Qualm Description:"
         android:id="@+id/textView2"
         android:textSize="25sp"
-        android:layout_below="@+id/picButton_A"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp" />
+        android:layout_above="@+id/newTitle" />
 
     <LinearLayout android:layout_width="match_parent"
         android:layout_height="230dp"
         android:id="@+id/linearLayout">
         <ImageView
-            android:scaleType="matrix"
+            android:scaleType="fitXY"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -62,7 +60,7 @@
             android:src="@drawable/fashion_a"
             />
         <ImageView
-            android:scaleType="matrix"
+            android:scaleType="fitXY"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -77,8 +75,7 @@
         android:text="Submit"
         android:id="@+id/new_submit"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="63dp" />
+        android:layout_alignParentStart="true" />
 
 
 </RelativeLayout>

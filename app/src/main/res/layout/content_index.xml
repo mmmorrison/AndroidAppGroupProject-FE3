@@ -20,4 +20,12 @@
         android:id="@+id/your_decisions"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="170dp"
+        android:layout_height="60dp"
+        android:text="New Qualm"
+        android:id="@+id/new_qualm"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>
