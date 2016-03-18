@@ -51,6 +51,7 @@
     <LinearLayout android:layout_width="match_parent"
         android:layout_height="230dp"
         android:id="@+id/linearLayout">
+
         <ImageView
             android:scaleType="fitXY"
             android:layout_width="match_parent"
@@ -69,13 +70,6 @@
             />
     </LinearLayout>
 
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageTest"
-        android:layout_below="@+id/picButton_A"
-        android:layout_alignStart="@+id/picButton_A" />
 
     <LinearLayout android:layout_width="match_parent"
         android:layout_height="wrap_content"

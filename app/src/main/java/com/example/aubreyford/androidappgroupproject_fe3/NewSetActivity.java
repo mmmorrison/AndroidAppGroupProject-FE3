@@ -50,6 +50,7 @@ public class NewSetActivity extends AppCompatActivity {
 
 
                 submitBtn.setOnClickListener(new View.OnClickListener() {
+
                     @Override
                     public void onClick(View view) {
 
@@ -77,6 +78,7 @@ public class NewSetActivity extends AppCompatActivity {
                 });
     }
 
+
     public void Back(){
         backBtn = (Button) findViewById(R.id.new_back);
 
@@ -100,7 +102,6 @@ public class NewSetActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 dispatchTakePictureIntent(1);
-
             }
         });
     }
@@ -112,10 +113,10 @@ public class NewSetActivity extends AppCompatActivity {
 
         PicButtonB.setOnClickListener(new View.OnClickListener() {
 
+
             @Override
             public void onClick(View view) {
                 dispatchTakePictureIntent(2);
-
             }
         });
     }

@@ -20,12 +20,8 @@ import android.util.Log;
 public class MainActivity extends AppCompatActivity {
 
 
-
     private static ImageButton index_nav;
     private static ImageButton decide_nav;
-
-
-
 
 
     @Override
