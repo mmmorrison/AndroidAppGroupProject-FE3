@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
         Typeface guldScript = Typeface.createFromAsset(getAssets(), "GuldScript_PersonalUseOnly.ttf");
         TextView appTitle = (TextView) findViewById(R.id.app_title);
+
         appTitle.setTypeface(guldScript);
         IndexNavListener();
         DecideNavListener();
@@ -44,36 +45,36 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        Log.i("***", "******************");
-
-        ImageView pictA = (ImageView) findViewById(R.id.fashion_a);
-        Bitmap bitmappA = ((BitmapDrawable) pictA.getDrawable()).getBitmap();
-
-
-
-        if(bitmappA!=null && !bitmappA.isRecycled()){
-            bitmappA.recycle();
-            bitmappA = null;
-        }
-
-
-
-        ImageView pictB = (ImageView) findViewById(R.id.fashion_b);
-        Bitmap bitmappB = ((BitmapDrawable) pictB.getDrawable()).getBitmap();
-
-        if(bitmappB!=null && !bitmappB.isRecycled()){
-            bitmappB.recycle();
-            bitmappB = null;
-        }
-
-        pictA.setImageBitmap(null);
-        pictB.setImageBitmap(null);
-
-    }
+//    @Override
+//    protected void onStop() {
+//        super.onStop();
+//
+//        Log.i("***", "******************");
+//
+//        ImageView pictA = (ImageView) findViewById(R.id.fashion_a);
+//        Bitmap bitmappA = ((BitmapDrawable) pictA.getDrawable()).getBitmap();
+//
+//
+//
+//        if(bitmappA!=null && !bitmappA.isRecycled()){
+//            bitmappA.recycle();
+//            bitmappA = null;
+//        }
+//
+//
+//
+//        ImageView pictB = (ImageView) findViewById(R.id.fashion_b);
+//        Bitmap bitmappB = ((BitmapDrawable) pictB.getDrawable()).getBitmap();
+//
+//        if(bitmappB!=null && !bitmappB.isRecycled()){
+//            bitmappB.recycle();
+//            bitmappB = null;
+//        }
+//
+//        pictA.setImageBitmap(null);
+//        pictB.setImageBitmap(null);
+//
+//    }
 
 
 

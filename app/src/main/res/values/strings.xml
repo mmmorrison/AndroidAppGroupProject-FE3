@@ -6,4 +6,6 @@
     <string name="title_activity_index">index</string>
     <string name="title_activity_decide">DecideActivity</string>
     <string name="title_activity_new_set">NewSetActivity</string>
+    <string name="title_activity_test">TestActivity</string>
+    <string name="title_activity_test_b">TestBActivity</string>
 </resources>

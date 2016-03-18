@@ -22,7 +22,6 @@ public class index extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         NewSetNavListener();
     }
 
