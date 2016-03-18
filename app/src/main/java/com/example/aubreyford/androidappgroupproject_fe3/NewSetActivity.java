@@ -41,32 +41,7 @@ public class NewSetActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.i("***","******************");
 
-        ImageView picA = (ImageView) findViewById(R.id.pic_A);
-        Bitmap bitmapA = ((BitmapDrawable) picA.getDrawable()).getBitmap();
-
-        if(bitmapA!=null){
-            bitmapA.recycle();
-//            bitmapA = null;
-        }
-
-
-
-        ImageView picB = (ImageView) findViewById(R.id.pic_B);
-        Bitmap bitmapB = ((BitmapDrawable) picB.getDrawable()).getBitmap();
-
-        if(bitmapB!=null){
-            bitmapB.recycle();
-//            bitmapB = null;
-        }
-
-
-
-    }
 
 
     public void Submit(){
@@ -84,7 +59,6 @@ public class NewSetActivity extends AppCompatActivity {
 
                         ImageView picB = (ImageView) findViewById(R.id.pic_B);
                         Bitmap bitmapB = ((BitmapDrawable) picB.getDrawable()).getBitmap();
-
 
 
                         EditText titleObject = (EditText) findViewById(R.id.newTitle);
