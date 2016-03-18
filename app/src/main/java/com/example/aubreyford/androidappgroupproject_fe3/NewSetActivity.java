@@ -19,10 +19,16 @@ public class NewSetActivity extends AppCompatActivity {
 
     private static Button PicButtonA;
     private static Button PicButtonB;
+<<<<<<< HEAD
 //    private static ImageView picA;
 //    private static ImageView picB;
     private static Button submitBtn;
     private static Button backBtn;
+=======
+    private static ImageView picA;
+    private static ImageView picB;
+    private static Button submitBtn;
+>>>>>>> ee5772503a978194ba78e6650c2fe9103b0a493e
 //    private static ImageView image_test;
 
 
@@ -34,6 +40,7 @@ public class NewSetActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+<<<<<<< HEAD
         TakePicA();
         TakePicB();
         Submit();
@@ -101,6 +108,12 @@ public class NewSetActivity extends AppCompatActivity {
 
                     }
                 });
+=======
+
+        TakePicA();
+        TakePicB();
+        Submit();
+>>>>>>> ee5772503a978194ba78e6650c2fe9103b0a493e
     }
 
     public void Back(){
@@ -113,6 +126,38 @@ public class NewSetActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+
+    public void Submit(){
+
+        submitBtn = (Button) findViewById(R.id.new_submit);
+
+
+                submitBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        picA = (ImageView) findViewById(R.id.pic_A);
+                        Bitmap bitmapA = ((BitmapDrawable) picA.getDrawable()).getBitmap();
+
+                        picB = (ImageView) findViewById(R.id.pic_B);
+                        Bitmap bitmapB = ((BitmapDrawable) picB.getDrawable()).getBitmap();
+
+                        EditText titleObject = (EditText) findViewById(R.id.newTitle);
+                        String title = titleObject.getText().toString();
+
+                        Log.i("*************", title);
+
+                        Intent intent = new Intent(view.getContext(), index.class);
+                        startActivity(intent);
+//
+//                        image_test = (ImageView) findViewById(R.id.imageTest);
+//                        image_test.setImageBitmap(bitmapB);
+
+
+                    }
+                });
     }
 
 
@@ -171,6 +216,7 @@ public class NewSetActivity extends AppCompatActivity {
             ImageView picB = (ImageView) findViewById(R.id.pic_B);
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
+            Bitmap bitmapA = imageBitmap;
             picB.setImageBitmap(imageBitmap);
 
         }
