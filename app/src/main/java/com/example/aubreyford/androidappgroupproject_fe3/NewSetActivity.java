@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.provider.MediaStore;
 import android.graphics.Bitmap;
@@ -28,18 +29,44 @@ public class NewSetActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_new_set);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
         TakePicA();
         TakePicB();
         Submit();
         Back();
+
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.i("***","******************");
 
+        ImageView picA = (ImageView) findViewById(R.id.pic_A);
+        Bitmap bitmapA = ((BitmapDrawable) picA.getDrawable()).getBitmap();
+
+        if(bitmapA!=null){
+            bitmapA.recycle();
+//            bitmapA = null;
+        }
+
+
+
+        ImageView picB = (ImageView) findViewById(R.id.pic_B);
+        Bitmap bitmapB = ((BitmapDrawable) picB.getDrawable()).getBitmap();
+
+        if(bitmapB!=null){
+            bitmapB.recycle();
+//            bitmapB = null;
+        }
+
+
+
+    }
 
 
     public void Submit(){
@@ -93,6 +120,7 @@ public class NewSetActivity extends AppCompatActivity {
     public void TakePicA(){
         PicButtonA = (Button) findViewById(R.id.picButton_A);
 
+
         PicButtonA.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -106,6 +134,7 @@ public class NewSetActivity extends AppCompatActivity {
 
     public void TakePicB(){
         PicButtonB = (Button) findViewById(R.id.picButton_B);
+
 
         PicButtonB.setOnClickListener(new View.OnClickListener() {
 
@@ -135,6 +164,7 @@ public class NewSetActivity extends AppCompatActivity {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             picA.setImageBitmap(imageBitmap);
+
         }
 
         if (requestCode == 2 && resultCode == RESULT_OK) {
@@ -142,6 +172,7 @@ public class NewSetActivity extends AppCompatActivity {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             picB.setImageBitmap(imageBitmap);
+
         }
     }
 

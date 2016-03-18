@@ -1,7 +1,9 @@
 package com.example.aubreyford.androidappgroupproject_fe3;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -10,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ImageButton;
 import android.util.Log;
@@ -20,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
 
     private static ImageButton index_nav;
     private static ImageButton decide_nav;
+
+
 
 
 
@@ -35,7 +40,39 @@ public class MainActivity extends AppCompatActivity {
         appTitle.setTypeface(guldScript);
         IndexNavListener();
         DecideNavListener();
-        Log.i("checkit", "**************");
+    }
+
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        Log.i("***", "******************");
+
+        ImageView pictA = (ImageView) findViewById(R.id.fashion_a);
+        Bitmap bitmappA = ((BitmapDrawable) pictA.getDrawable()).getBitmap();
+
+
+
+        if(bitmappA!=null && !bitmappA.isRecycled()){
+            bitmappA.recycle();
+            bitmappA = null;
+        }
+
+
+
+        ImageView pictB = (ImageView) findViewById(R.id.fashion_b);
+        Bitmap bitmappB = ((BitmapDrawable) pictB.getDrawable()).getBitmap();
+
+        if(bitmappB!=null && !bitmappB.isRecycled()){
+            bitmappB.recycle();
+            bitmappB = null;
+        }
+
+        pictA.setImageBitmap(null);
+        pictB.setImageBitmap(null);
+
     }
 
 

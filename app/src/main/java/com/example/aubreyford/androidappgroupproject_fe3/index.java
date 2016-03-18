@@ -13,6 +13,7 @@ import android.widget.Button;
 public class index extends AppCompatActivity {
 
     private static Button newQualm;
+    private static Button indexBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,7 @@ public class index extends AppCompatActivity {
 
     public void NewSetNavListener() {
         newQualm = (Button) findViewById(R.id.new_qualm);
+        indexBack = (Button) findViewById(R.id.index_back);
 
         newQualm.setOnClickListener(new View.OnClickListener() {
 
@@ -34,6 +36,17 @@ public class index extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), NewSetActivity.class);
                 startActivity(intent);
+
+            }
+        });
+
+        indexBack.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), MainActivity.class);
+                startActivity(intent);
+
             }
         });
     }
