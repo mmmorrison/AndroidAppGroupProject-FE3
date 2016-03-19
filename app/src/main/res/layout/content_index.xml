@@ -12,6 +12,8 @@
     tools:context="com.example.aubreyford.androidappgroupproject_fe3.index"
     tools:showIn="@layout/activity_index">
 
+
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -20,6 +22,13 @@
         android:id="@+id/your_decisions"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
+
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:listitem="@layout/row" >
+    </ListView>
 
     <Button
         android:layout_width="150dp"
