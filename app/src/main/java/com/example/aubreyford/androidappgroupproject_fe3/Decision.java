@@ -4,9 +4,6 @@ package com.example.aubreyford.androidappgroupproject_fe3;
  * Created by HomeMariaHome on 3/17/16.
  */
 
-/**
- * Created by HomeMariaHome on 3/17/16.
- */
 public class Decision {
     private int id;
     private int user_id;
@@ -16,7 +13,7 @@ public class Decision {
     private String picB;
 
 
-    public Decision(int id, int user_id, String title, String category, String photoURLA, String photoURLB) {
+    public Decision(int id, int user_id, String title, String category, String picA, String picB) {
         this.id = id;
         this.user_id = user_id;
         this.title = title;

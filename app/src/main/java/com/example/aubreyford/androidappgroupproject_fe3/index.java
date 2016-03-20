@@ -4,10 +4,10 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -55,6 +55,8 @@ public class index extends AppCompatActivity {
 
     private static Button newQualm;
     private static Button indexBack;
+    ArrayList<Decision> decisionList;
+    DecisionAdapter adapter;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -63,12 +65,17 @@ public class index extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_index);
         new JSONAsyncTask().execute("https://thisorthatdb.herokuapp.com/posters/decisions");
+        ListView listview = (ListView)findViewById(R.id.list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        decisionList= new ArrayList<Decision>();
+        System.out.println("$$$$$$$$"+ getApplicationContext());
+        adapter = new DecisionAdapter(getApplicationContext(), R.layout.row, decisionList);
+        Log.i("@@@@", "about to create the adapter");
+        listview.setAdapter(adapter);
 
 
         NewSetNavListener();
@@ -185,7 +192,6 @@ public class index extends AppCompatActivity {
 
         protected void onPostExecute(String result) {
 
-            Log.i("**********", result);
 
             try {
                 JSONObject resultObject = new JSONObject(result);
@@ -195,10 +201,7 @@ public class index extends AppCompatActivity {
 //
             for (int i = 0; i < decisions.length(); i++) {
                 JSONObject decisionObject = decisions.getJSONObject(i);
-                Decision decision = new Decision(0, decisionObject.getInt("user_id"), decisionObject.getString("title"), decisionObject.getString("category"));
-                Log.i("*************", "***************");
-                System.out.println(decision);
-//                System.out.println(resultObject[0]);
+                Decision decision = new Decision(0, decisionObject.getInt("user_id"), decisionObject.getString("title"), decisionObject.getString("category"), decisionObject.getString("picA"), decisionObject.getString("picB"));
                 }
             }
             catch (Exception e) {

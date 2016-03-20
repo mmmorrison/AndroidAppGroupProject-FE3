@@ -90,7 +90,6 @@ public class NewSetActivity extends AppCompatActivity {
                         EditText titleObject = (EditText) findViewById(R.id.newTitle);
                         String title = titleObject.getText().toString();
 
-                        Log.i("*************", title);
 
                         Intent intent = new Intent(view.getContext(), index.class);
                         startActivity(intent);

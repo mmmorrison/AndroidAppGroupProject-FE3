@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
 
-        Log.i("***", "******************");
 
         ImageView pictA = (ImageView) findViewById(R.id.fashion_a);
         Bitmap bitmappA = ((BitmapDrawable) pictA.getDrawable()).getBitmap();
