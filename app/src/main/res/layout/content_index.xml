@@ -12,6 +12,7 @@
     tools:context="com.example.aubreyford.androidappgroupproject_fe3.index"
     tools:showIn="@layout/activity_index">
 
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -20,4 +21,26 @@
         android:id="@+id/your_decisions"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
+
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </ListView>
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:text="New Qualm"
+        android:id="@+id/new_qualm"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:text="Back"
+        android:id="@+id/index_back"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>

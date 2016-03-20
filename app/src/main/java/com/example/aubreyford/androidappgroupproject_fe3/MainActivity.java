@@ -1,7 +1,9 @@
 package com.example.aubreyford.androidappgroupproject_fe3;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -10,8 +12,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ImageButton;
+import android.util.Log;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
 
     private static ImageButton index_nav;
     private static ImageButton decide_nav;
+
+
 
 
 
@@ -38,53 +44,68 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    @Override
+    protected void onStop() {
+        super.onStop();
 
 
-        public void IndexNavListener() {
+        ImageView pictA = (ImageView) findViewById(R.id.fashion_a);
+        Bitmap bitmappA = ((BitmapDrawable) pictA.getDrawable()).getBitmap();
+
+
+
+        if(bitmappA!=null && !bitmappA.isRecycled()){
+            bitmappA.recycle();
+            bitmappA = null;
+        }
+
+
+
+        ImageView pictB = (ImageView) findViewById(R.id.fashion_b);
+        Bitmap bitmappB = ((BitmapDrawable) pictB.getDrawable()).getBitmap();
+
+        if(bitmappB!=null && !bitmappB.isRecycled()){
+            bitmappB.recycle();
+            bitmappB = null;
+        }
+
+        pictA.setImageBitmap(null);
+        pictB.setImageBitmap(null);
+
+    }
+
+
+
+
+
+    public void IndexNavListener() {
             index_nav = (ImageButton) findViewById(R.id.fashion_b);
 
-            index_nav.setOnClickListener(
-
-                    new View.OnClickListener() {
+            index_nav.setOnClickListener(new View.OnClickListener() {
 
                         @Override
-                        public void onClick(View v) {
-
-                            Intent intent = new Intent("com.example.aubreyford.androidappgroupproject_fe3.index");
+                        public void onClick(View view) {
+                            Intent intent = new Intent(view.getContext(), index.class);
                             startActivity(intent);
-
                         }
-
-                    }
-
-            );
+            });
         }
 
 
-        public void DecideNavListener() {
+    public void DecideNavListener() {
             decide_nav = (ImageButton) findViewById(R.id.fashion_a);
 
-            decide_nav.setOnClickListener(
-
-                    new View.OnClickListener() {
+            decide_nav.setOnClickListener(new View.OnClickListener() {
 
                         @Override
-                        public void onClick(View v){
-
-                            Intent intent = new Intent("com.example.aubreyford.androidappgroupproject_fe3.DecideActivity");
+                        public void onClick(View view){
+//                            Intent intent = new Intent("com.example.aubreyford.androidappgroupproject_fe3.DecideActivity");
+                            Intent intent = new Intent(view.getContext(), DecideActivity.class);
                             startActivity(intent);
-
                         }
 
-                    }
-
-            );
+            });
         }
-
-
-
-
-
 
 
 

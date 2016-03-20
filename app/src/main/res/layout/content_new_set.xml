@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.aubreyford.androidappgroupproject_fe3.NewSetActivity"
+    tools:showIn="@layout/activity_new_set">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Take Picture A"
+        android:id="@+id/picButton_A"
+        android:layout_marginStart="24dp"
+        android:layout_below="@+id/linearLayout"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Take Picture B"
+        android:id="@+id/picButton_B"
+        android:layout_marginEnd="24dp"
+        android:layout_below="@+id/linearLayout"
+        android:layout_alignParentEnd="true" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/newTitle"
+        android:layout_marginBottom="24dp"
+        android:layout_above="@+id/nav_section"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Qualm Description:"
+        android:id="@+id/textView2"
+        android:textSize="25sp"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/newTitle" />
+
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="230dp"
+        android:id="@+id/linearLayout">
+        <ImageView
+            android:scaleType="fitXY"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/pic_A"
+            android:src="@drawable/fashion_a"
+            />
+        <ImageView
+            android:scaleType="fitXY"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/pic_B"
+            android:src="@drawable/fashion_b"
+            />
+    </LinearLayout>
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageTest"
+        android:layout_below="@+id/picButton_A"
+        android:layout_alignStart="@+id/picButton_A" />
+
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/nav_section"
+        >
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:layout_weight="1"
+            android:text="Back"
+            android:id="@+id/new_back"
+            />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:layout_weight="1"
+            android:text="Submit"
+            android:id="@+id/new_submit"
+            />
+
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>
