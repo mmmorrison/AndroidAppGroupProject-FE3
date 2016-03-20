@@ -15,14 +15,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class DecisionAdapter extends ArrayAdapter<String[]> {
+public class DecisionAdapter extends ArrayAdapter<Decision> {
 //    ArrayList<Decision> decisionList;
 //    LayoutInflater vi;
 //    int Resource;
 //    ViewHolder holder;
 
-    public DecisionAdapter(Context context, String[][] replaceThis) {
-        super(context, R.layout.row, replaceThis);
+    public DecisionAdapter(Context context, ArrayList<Decision> decision) {
+        super(context, R.layout.row, decision);
 //        vi = (LayoutInflater) context
 //                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 //        Resource = resource;
@@ -35,10 +35,12 @@ public class DecisionAdapter extends ArrayAdapter<String[]> {
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View customView = inflater.inflate(R.layout.row, parent, false);
 
+//        new JSONAsyncTask().execute("https://thisorthatdb.herokuapp.com/posters/decisions");
 
-        String[] arrayItem = getItem(position);
+        Decision whatever = getItem(position);
         TextView title = (TextView) customView.findViewById(R.id.title);
-        title.setText(arrayItem[1]);
+        title.setText(whatever.getTitle());
+
 
 
 //        ImageView picA = (ImageView) customView.findViewById(R.id.pic_A);

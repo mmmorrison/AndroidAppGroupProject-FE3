@@ -57,7 +57,7 @@ public class index extends AppCompatActivity {
     private static Button newQualm;
     private static Button indexBack;
     ArrayList<Decision> decisionList;
-    DecisionAdapter adapter;
+
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -68,16 +68,16 @@ public class index extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_index);
-        new JSONAsyncTask().execute("https://thisorthatdb.herokuapp.com/posters/decisions");
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-//        decisionList = new ArrayList<Decision>();
 
 
+        decisionList = new ArrayList<Decision>();
 
-        String[][] testArray = {{"hello", "333333"},{"hello1", "222222"},{"hello2", "33333333"}};
+        new JSONAsyncTask().execute("https://thisorthatdb.herokuapp.com/posters/decisions");
 
-        ListAdapter adapter = new DecisionAdapter(this, testArray);
+//        String[][] testArray = {{"hello", "watasdg"},{"hello1", "222222"},{"hello2", "33333333"}};
+        ListAdapter adapter = new DecisionAdapter(this, decisionList);
         ListView listview = (ListView)findViewById(R.id.list);
         listview.setAdapter(adapter);
 
@@ -155,6 +155,17 @@ public class index extends AppCompatActivity {
         client.disconnect();
     }
 
+
+
+
+
+
+
+
+
+
+
+
     class JSONAsyncTask extends AsyncTask<String, Void, String> {
 
         ProgressDialog dialog;
@@ -191,13 +202,18 @@ public class index extends AppCompatActivity {
 
             } catch (Exception e) {
         }
+
+
             return result.toString();
-    }
+
+        }
 
         protected void onPostExecute(String result) {
 
 
             try {
+                String resultLog = result.toString();
+
                 JSONObject resultObject = new JSONObject(result);
 
                 JSONArray decisions = resultObject.getJSONArray("decisions");
@@ -205,9 +221,15 @@ public class index extends AppCompatActivity {
 //
             for (int i = 0; i < decisions.length(); i++) {
                 JSONObject decisionObject = decisions.getJSONObject(i);
-                Decision decision = new Decision(0, decisionObject.getInt("user_id"), decisionObject.getString("title"), decisionObject.getString("category"), decisionObject.getString("picA"), decisionObject.getString("picB"));
+                Decision decision = new Decision(decisionObject.getInt("id"), decisionObject.getInt("user_id"), decisionObject.getString("title"), decisionObject.getString("category"), decisionObject.getString("picA"), decisionObject.getString("picB"));
+
+                decisionList.add(decision);
                 }
+
+
+
             }
+
             catch (Exception e) {
             }
 
@@ -232,6 +254,16 @@ public class index extends AppCompatActivity {
 //                actorsList.add(actor);
 //            };
         }
+
+
+
+
+
+
+
+
+
+
 
         //                } catch (Exception e) {
 //                }
