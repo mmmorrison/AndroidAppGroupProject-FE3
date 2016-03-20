@@ -39,8 +39,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    
-
 
     public void IndexNavListener() {
             index_nav = (ImageButton) findViewById(R.id.fashion_b);
