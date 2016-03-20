@@ -259,7 +259,8 @@ public class index extends AppCompatActivity {
                 HashMap<String, Object> hm = (HashMap<String, Object>) adapter.getItem(i);
                 String picA_Url = (String) hm.get("picA_Url");
                 String picB_Url = (String) hm.get("picB_Url");
-                ImageLoaderTask imageLoaderTask = new ImageLoaderTask();
+                ImageLoaderTaskA imageLoaderTaskA = new ImageLoaderTaskA();
+                ImageLoaderTaskB imageLoaderTaskB = new ImageLoaderTaskB();
 
                 HashMap<String, Object> hmDownload = new HashMap<String, Object>(); //extraneous?
 
@@ -268,11 +269,12 @@ public class index extends AppCompatActivity {
                 hm.put("picB_Url", picB_Url);
                 hm.put("positionB", i);
 
-                imageLoaderTask.execute(hm);
+                imageLoaderTaskA.execute(hm);
+                imageLoaderTaskB.execute(hm);
             }
         }
 
-        private class ImageLoaderTask extends AsyncTask<HashMap<String, Object>, Void, HashMap<String, Object>> {
+        private class ImageLoaderTaskA extends AsyncTask<HashMap<String, Object>, Void, HashMap<String, Object>> {
 
             @Override
             protected HashMap<String, Object> doInBackground(HashMap<String, Object>... hm) {
@@ -281,9 +283,10 @@ public class index extends AppCompatActivity {
                 String imgUrl = (String) hm[0].get("picA_Url");
                 int position = (Integer) hm[0].get("positionA");
 
-                Log.i("***********************IMMAGEURL", imgUrl);
+                Log.i("************IMMAGEURL", imgUrl);
                 Log.i("*****", "ImageLoaderTaskSTARTT");
                 URL url;
+                
                 try {
                     url = new URL(imgUrl);
 
@@ -291,7 +294,7 @@ public class index extends AppCompatActivity {
                     urlConnection.connect();
                     iStream = urlConnection.getInputStream();
                     File cacheDirectory = getBaseContext().getCacheDir();
-                    File tmpFile = new File(cacheDirectory.getPath() + "/wpta_" + position + ".png");
+                    File tmpFile = new File(cacheDirectory.getPath() + "/wpta_" + position + "A.png");
                     FileOutputStream fOutStream = new FileOutputStream(tmpFile);
                     Bitmap b = BitmapFactory.decodeStream(iStream);
                     b.compress(Bitmap.CompressFormat.PNG, 100, fOutStream);
@@ -316,6 +319,55 @@ public class index extends AppCompatActivity {
                 SimpleAdapter adapter = (SimpleAdapter) mListView.getAdapter();
                 HashMap<String, Object> hm = (HashMap<String, Object>) adapter.getItem(position);
                 hm.put("picA", path);
+                adapter.notifyDataSetChanged();
+            }
+        }
+
+
+        private class ImageLoaderTaskB extends AsyncTask<HashMap<String, Object>, Void, HashMap<String, Object>> {
+
+            @Override
+            protected HashMap<String, Object> doInBackground(HashMap<String, Object>... hm) {
+
+                InputStream iStream = null;
+                String imgUrl = (String) hm[0].get("picB_Url");
+                int position = (Integer) hm[0].get("positionB");
+
+                Log.i("************IMMAGEURL", imgUrl);
+                Log.i("*****", "ImageLoaderTaskSTARTT");
+                URL url;
+                try {
+                    url = new URL(imgUrl);
+
+                    HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                    urlConnection.connect();
+                    iStream = urlConnection.getInputStream();
+                    File cacheDirectory = getBaseContext().getCacheDir();
+                    File tmpFile = new File(cacheDirectory.getPath() + "/wpta_" + position + "B.png");
+                    FileOutputStream fOutStream = new FileOutputStream(tmpFile);
+                    Bitmap b = BitmapFactory.decodeStream(iStream);
+                    b.compress(Bitmap.CompressFormat.PNG, 100, fOutStream);
+                    fOutStream.flush();
+                    fOutStream.close();
+                    HashMap<String, Object> hmBitmap = new HashMap<String, Object>();
+                    hmBitmap.put("picB", tmpFile.getPath());
+                    hmBitmap.put("positionB", position);
+                    return hmBitmap;
+
+                } catch (Exception e) {
+                    Log.i("************", "ImageLoaderTaskFAILBBBB");
+                    e.printStackTrace();
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(HashMap<String, Object> result) {
+                String path = (String) result.get("picB");
+                int position = (Integer) result.get("positionB");
+                SimpleAdapter adapter = (SimpleAdapter) mListView.getAdapter();
+                HashMap<String, Object> hm = (HashMap<String, Object>) adapter.getItem(position);
+                hm.put("picB", path);
                 adapter.notifyDataSetChanged();
             }
         }
