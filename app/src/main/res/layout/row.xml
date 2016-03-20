@@ -7,7 +7,14 @@
     android:orientation="vertical" >
 
 
-        <ImageView
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/title">
+
+    </TextView>
+
+    <ImageView
             android:id="@+id/pic_A"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -15,7 +22,7 @@
             android:src="@drawable/fashion_a"
             />
 
-        <ImageView
+    <ImageView
             android:id="@+id/pic_B"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -23,11 +30,5 @@
             android:src="@drawable/fashion_b"
             />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/title">
-
-    </TextView>
 
 </LinearLayout>
