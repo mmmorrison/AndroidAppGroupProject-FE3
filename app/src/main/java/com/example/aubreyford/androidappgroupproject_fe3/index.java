@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.AdapterView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.util.Log;
 import android.view.View;
@@ -68,13 +69,16 @@ public class index extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_index);
         new JSONAsyncTask().execute("https://thisorthatdb.herokuapp.com/posters/decisions");
-        ListView listview = (ListView)findViewById(R.id.list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        decisionList= new ArrayList<Decision>();
-        System.out.println("$$$$$$$$"+ getApplicationContext());
-        adapter = new DecisionAdapter(getApplicationContext(), R.layout.row, decisionList);
-        Log.i("@@@@", "about to create the adapter");
+//        decisionList = new ArrayList<Decision>();
+
+
+
+        String[][] testArray = {{"hello", "333333"},{"hello1", "222222"},{"hello2", "33333333"}};
+
+        ListAdapter adapter = new DecisionAdapter(this, testArray);
+        ListView listview = (ListView)findViewById(R.id.list);
         listview.setAdapter(adapter);
 
 

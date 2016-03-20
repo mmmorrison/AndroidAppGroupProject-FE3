@@ -15,63 +15,77 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class DecisionAdapter extends ArrayAdapter<Decision> {
-    ArrayList<Decision> decisionList;
-    LayoutInflater vi;
-    int Resource;
-    ViewHolder holder;
+public class DecisionAdapter extends ArrayAdapter<String[]> {
+//    ArrayList<Decision> decisionList;
+//    LayoutInflater vi;
+//    int Resource;
+//    ViewHolder holder;
 
-    public DecisionAdapter(Context context, int resource, ArrayList<Decision> objects) {
-        super(context, resource, objects);
-        vi = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        Resource = resource;
-        decisionList = objects;
+    public DecisionAdapter(Context context, String[][] replaceThis) {
+        super(context, R.layout.row, replaceThis);
+//        vi = (LayoutInflater) context
+//                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//        Resource = resource;
+//        decisionList = objects;
     }
-
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
+        LayoutInflater inflater = LayoutInflater.from(getContext());
+        View customView = inflater.inflate(R.layout.row, parent, false);
+
+
+        String[] arrayItem = getItem(position);
+        TextView title = (TextView) customView.findViewById(R.id.title);
+        title.setText(arrayItem[1]);
+
+
+//        ImageView picA = (ImageView) customView.findViewById(R.id.pic_A);
+//        picA.setImageResource(R.drawable.fashion_a);
+
         Log.i("!!!!", "got to getView in DecisionAdapter");
-        // convert view = design
-        View v = convertView;
-        if (v == null) {
-            holder = new ViewHolder();
-            v = vi.inflate(Resource, null);
-            holder.pic_A = (ImageView) v.findViewById(R.id.pic_A);
-            holder.pic_B = (ImageView) v.findViewById(R.id.pic_B);
-//            holder.tvName = (TextView) v.findViewById(R.id.tvName);
-//            holder.tvDescription = (TextView) v.findViewById(R.id.tvDescriptionn);
-//			holder.tvDOB = (TextView) v.findViewById(R.id.tvDateOfBirth);
-//			holder.tvCountry = (TextView) v.findViewById(R.id.tvCountry);
-//			holder.tvHeight = (TextView) v.findViewById(R.id.tvHeight);
-//			holder.tvSpouse = (TextView) v.findViewById(R.id.tvSpouse);
-//			holder.tvChildren = (TextView) v.findViewById(R.id.tvChildren);
-            v.setTag(holder);
-        } else {
-            holder = (ViewHolder) v.getTag();
-        }
-//        holder.pic_A.setImageResource(R.drawable.ic_launcher);
-        String url = decisionList.get(position).getPicA();
-        System.out.println("url in adapter****" + url);
-        new DownloadImageTask(holder.pic_A).execute(decisionList.get(position).getPicA());
-//        holder.pic_B.setImageResource(R.drawable.ic_launcher);
-        new DownloadImageTask(holder.pic_B).execute(decisionList.get(position).getPicB());
-//        holder.tvName.setText(actorList.get(position).getTitle());
-//        holder.tvDescription.setText(actorList.get(position).getCategory());
-//		holder.tvDOB.setText("B'day: " + actorList.get(position).getDob());
-//		holder.tvCountry.setText(actorList.get(position).getCountry());
-//		holder.tvHeight.setText("Height: " + actorList.get(position).getHeight());
-//		holder.tvSpouse.setText("Spouse: " + actorList.get(position).getSpouse());
-//		holder.tvChildren.setText("Children: " + actorList.get(position).getChildren());
-        return v;
+
+        return customView;
+//        // convert view = design
+//        View v = convertView;
+//        if (v == null) {
+//            holder = new ViewHolder();
+//            v = vi.inflate(Resource, null);
+////            holder.pic_A = (ImageView) v.findViewById(R.id.pic_A);
+////            holder.pic_B = (ImageView) v.findViewById(R.id.pic_B);
+//            holder.title = (TextView) v.findViewById(R.id.title);
+////            holder.tvDescription = (TextView) v.findViewById(R.id.tvDescription);
+////			holder.tvDOB = (TextView) v.findViewById(R.id.tvDateOfBirth);
+////			holder.tvCountry = (TextView) v.findViewById(R.id.tvCountry);
+////			holder.tvHeight = (TextView) v.findViewById(R.id.tvHeight);
+////			holder.tvSpouse = (TextView) v.findViewById(R.id.tvSpouse);
+////			holder.tvChildren = (TextView) v.findViewById(R.id.tvChildren);
+//            v.setTag(holder);
+//        } else {
+//            holder = (ViewHolder) v.getTag();
+//        }
+////        holder.pic_A.setImageResource(R.drawable.ic_launcher);
+//        String url = decisionList.get(position).getPicA();
+//        System.out.println("url in adapter****" + url);
+//        new DownloadImageTask(holder.pic_A).execute(decisionList.get(position).getPicA());
+////        holder.pic_B.setImageResource(R.drawable.ic_launcher);
+//        new DownloadImageTask(holder.pic_B).execute(decisionList.get(position).getPicB());
+////        holder.tvName.setText(actorList.get(position).getTitle());
+////        holder.tvDescription.setText(actorList.get(position).getCategory());
+////		holder.tvDOB.setText("B'day: " + actorList.get(position).getDob());
+////		holder.tvCountry.setText(actorList.get(position).getCountry());
+////		holder.tvHeight.setText("Height: " + actorList.get(position).getHeight());
+////		holder.tvSpouse.setText("Spouse: " + actorList.get(position).getSpouse());
+////		holder.tvChildren.setText("Children: " + actorList.get(position).getChildren());
+//        return v;
 
     }
 
     static class ViewHolder {
         public ImageView pic_A;
         public ImageView pic_B;
-//        public TextView tvName;
+        public TextView title;
 //        public TextView tvDescription;
 //        public TextView tvDOB;
 //        public TextView tvCountry;
