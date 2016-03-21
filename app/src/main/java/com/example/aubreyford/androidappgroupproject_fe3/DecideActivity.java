@@ -28,7 +28,7 @@ public class DecideActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         DecideNavListener();
-        appendData();
+
 
 
     }
@@ -58,13 +58,5 @@ public class DecideActivity extends AppCompatActivity {
         });
     }
 
-    private void appendData(){
-        pic_a = (ImageButton) findViewById(R.id.decide_pic_a);
-        pic_a = (ImageButton) findViewById(R.id.decide_pic_a);
-
-
-        pic_a.setImageResource(R.drawable.fashion_a);
-        pic_a.setImageResource(R.drawable.fashion_b);
-    }
 
 }

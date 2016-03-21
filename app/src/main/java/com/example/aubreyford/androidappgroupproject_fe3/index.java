@@ -233,7 +233,8 @@ public class index extends AppCompatActivity {
                 String imgUrl = (String) hm[0].get("picA_Url");
                 int position = (Integer) hm[0].get("positionA");
 
-                Log.i("************IMMAGEURL", imgUrl);
+                Log.i("************IMMAGEURLA", imgUrl);
+                Log.i("*****", "ImageLoaderTaskSTARTB");
                 URL url;
                 
                 try {
@@ -243,7 +244,7 @@ public class index extends AppCompatActivity {
                     urlConnection.connect();
                     iStream = urlConnection.getInputStream();
                     File cacheDirectory = getBaseContext().getCacheDir();
-                    File tmpFile = new File(cacheDirectory.getPath() + "/wpta_" + position + "A.png");
+                    File tmpFile = new File(cacheDirectory.getPath() + "/wpta_" + position + "a.png");
                     FileOutputStream fOutStream = new FileOutputStream(tmpFile);
                     Bitmap b = BitmapFactory.decodeStream(iStream);
                     b.compress(Bitmap.CompressFormat.PNG, 100, fOutStream);
@@ -255,7 +256,7 @@ public class index extends AppCompatActivity {
                     return hmBitmap;
 
                 } catch (Exception e) {
-                    Log.i("************", "ImageLoaderTaskFAIL");
+                    Log.i("************", "ImageLoaderTaskFAILA");
                     e.printStackTrace();
                 }
                 return null;
@@ -282,8 +283,8 @@ public class index extends AppCompatActivity {
                 String imgUrl = (String) hm[0].get("picB_Url");
                 int position = (Integer) hm[0].get("positionB");
 
-                Log.i("************IMMAGEURL", imgUrl);
-                Log.i("*****", "ImageLoaderTaskSTARTT");
+                Log.i("************IMMAGEURLB", imgUrl);
+                Log.i("*****", "ImageLoaderTaskSTARTBBB");
                 URL url;
                 try {
                     url = new URL(imgUrl);
@@ -292,7 +293,7 @@ public class index extends AppCompatActivity {
                     urlConnection.connect();
                     iStream = urlConnection.getInputStream();
                     File cacheDirectory = getBaseContext().getCacheDir();
-                    File tmpFile = new File(cacheDirectory.getPath() + "/wpta_" + position + "B.png");
+                    File tmpFile = new File(cacheDirectory.getPath() + "/wpta_" + position + "b.png");
                     FileOutputStream fOutStream = new FileOutputStream(tmpFile);
                     Bitmap b = BitmapFactory.decodeStream(iStream);
                     b.compress(Bitmap.CompressFormat.PNG, 100, fOutStream);

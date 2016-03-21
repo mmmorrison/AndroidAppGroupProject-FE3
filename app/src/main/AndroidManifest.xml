@@ -7,8 +7,6 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-    [
-
 
 
     <application
@@ -16,7 +14,8 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/brand_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:largeHeap="true">
 
         <activity
             android:name=".MainActivity"
