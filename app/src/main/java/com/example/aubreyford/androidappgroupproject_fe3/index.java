@@ -234,7 +234,6 @@ public class index extends AppCompatActivity {
                 int position = (Integer) hm[0].get("positionA");
 
                 Log.i("************IMMAGEURL", imgUrl);
-                Log.i("*****", "ImageLoaderTaskSTARTT");
                 URL url;
                 
                 try {
