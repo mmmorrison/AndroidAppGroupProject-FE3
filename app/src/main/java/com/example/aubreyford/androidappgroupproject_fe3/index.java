@@ -125,60 +125,12 @@ public class index extends AppCompatActivity {
         });
     }
 
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//
-//        // ATTENTION: This was auto-generated to implement the App Indexing API.
-//        // See https://g.co/AppIndexing/AndroidStudio for more information.
-//        client.connect();
-//        Action viewAction = Action.newAction(
-//                Action.TYPE_VIEW, // TODO: choose an action type.
-//                "index Page", // TODO: Define a title for the content shown.
-//                // TODO: If you have web page content that matches this app activity's content,
-//                // make sure this auto-generated web page URL is correct.
-//                // Otherwise, set the URL to null.
-//                Uri.parse("http://host/path"),
-//                // TODO: Make sure this auto-generated app URL is correct.
-//                Uri.parse("android-app://com.example.aubreyford.androidappgroupproject_fe3/http/host/path")
-//        );
-//        AppIndex.AppIndexApi.start(client, viewAction);
-//    }
-//
-//    @Override
-//    public void onStop() {
-//        super.onStop();
-//
-//        // ATTENTION: This was auto-generated to implement the App Indexing API.
-//        // See https://g.co/AppIndexing/AndroidStudio for more information.
-//        Action viewAction = Action.newAction(
-//                Action.TYPE_VIEW, // TODO: choose an action type.
-//                "index Page", // TODO: Define a title for the content shown.
-//                // TODO: If you have web page content that matches this app activity's content,
-//                // make sure this auto-generated web page URL is correct.
-//                // Otherwise, set the URL to null.
-//                Uri.parse("http://host/path"),
-//                // TODO: Make sure this auto-generated app URL is correct.
-//                Uri.parse("android-app://com.example.aubreyford.androidappgroupproject_fe3/http/host/path")
-//        );
-//        AppIndex.AppIndexApi.end(client, viewAction);
-//        client.disconnect();
-//    }
 
 
     class JSONAsyncTask extends AsyncTask<String, Void, String> {
 
         ProgressDialog dialog;
 
-//        @Override
-//        protected void onPreExecute() {
-//            super.onPreExecute();
-//            dialog = new ProgressDialog(MainActivity.this);
-//            dialog.setMessage("Loading, please wait");
-//            dialog.setTitle("Connecting server");
-//            dialog.show();
-//            dialog.setCancelable(false);
-//        }
 
         @Override
         protected String doInBackground(String... urls) {
@@ -222,12 +174,7 @@ public class index extends AppCompatActivity {
             try {
                 resultObject = new JSONObject(strJson[0]);
                 decisionsArray = resultObject.getJSONArray("decisions");
-//                for (int i = 0; i < decisions.length(); i++) {
-//                    JSONObject decisionObject = decisions.getJSONObject(i);
-//                    /////////////
-//                    Decision decision = new Decision(decisionObject.getInt("id"), decisionObject.getInt("user_id"), decisionObject.getString("title"), decisionObject.getString("category"), decisionObject.getString("picA"), decisionObject.getString("picB"));
-//                    ////////////
-//
+
             }catch(Exception e){
                 Log.i("*****", "SimpleAdapterFAILB");
                 Log.d("***ListViewLoaderTask", e.toString());
@@ -243,8 +190,8 @@ public class index extends AppCompatActivity {
                 Log.d("***Parsing", e.toString());
             }
 
-            String[] from = {"title", "picA", "picB"};
-            int[] to = {R.id.title, R.id.pic_A, R.id.pic_B};
+            String[] from = {"title", "picA", "picB", "id"};
+            int[] to = {R.id.title, R.id.pic_A, R.id.pic_B, R.id.row_delete};
             SimpleAdapter adapter = new SimpleAdapter(getBaseContext(), decisionList, R.layout.row, from, to);
 
             return adapter;
@@ -257,10 +204,13 @@ public class index extends AppCompatActivity {
 
             for (int i = 0; i < adapter.getCount(); i++) {
                 HashMap<String, Object> hm = (HashMap<String, Object>) adapter.getItem(i);
+
+
                 String picA_Url = (String) hm.get("picA_Url");
                 String picB_Url = (String) hm.get("picB_Url");
                 ImageLoaderTaskA imageLoaderTaskA = new ImageLoaderTaskA();
                 ImageLoaderTaskB imageLoaderTaskB = new ImageLoaderTaskB();
+
 
                 HashMap<String, Object> hmDownload = new HashMap<String, Object>(); //extraneous?
 

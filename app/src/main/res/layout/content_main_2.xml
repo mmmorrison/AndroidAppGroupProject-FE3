@@ -19,12 +19,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Decide"
+            android:text="Help a Qualmer"
             android:id="@+id/splash_vote"
             android:layout_gravity="center"
             android:textSize="80sp"
             android:textColor="#f3a301"
             android:textIsSelectable="false"
+            android:textAlignment="center"
             />
 
 
@@ -57,7 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="My Decisions"
+            android:text="My Qualms"
             android:id="@+id/splash_myDecisions"
             android:layout_gravity="center"
             android:textAlignment="center"

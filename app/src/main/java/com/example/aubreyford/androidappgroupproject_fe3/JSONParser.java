@@ -55,7 +55,7 @@ public class JSONParser {
         picA_Url= decisionObject.getString("picA");
         picB_Url= decisionObject.getString("picB");
 
-            Log.i("*********Should be title", title);
+            Log.i("****Should be title", title);
 
         mDecision.put("id", id);
         mDecision.put("user_id", user_id);
