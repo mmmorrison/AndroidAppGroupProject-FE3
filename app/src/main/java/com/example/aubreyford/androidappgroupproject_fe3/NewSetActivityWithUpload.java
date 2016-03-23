@@ -257,11 +257,11 @@ public class NewSetActivityWithUpload extends AppCompatActivity {
       beginUpload(uriPicB);
 
       // Record the decision in the database for this poster.
-      storeDecision(uriPicA, uriPicB);
+      storeDecision(uriPicA.toString(), uriPicB.toString());
 
     }
 
-    private void beginUpload(String filePath) {
+    private void beginUpload(Uri filePath) {
         if (filePath == null) {
             Toast.makeText(this, "Could not find the filepath of the selected file",
                     Toast.LENGTH_LONG).show();
