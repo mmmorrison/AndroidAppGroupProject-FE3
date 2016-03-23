@@ -419,9 +419,11 @@ public class UploadActivity extends ListActivity {
                     Toast.LENGTH_LONG).show();
             return;
         }
+
         File file = new File(filePath);
         TransferObserver observer = transferUtility.upload(Constants.BUCKET_NAME, file.getName(),
-                file);
+        file);
+
         /*
          * Note that usually we set the transfer listener after initializing the
          * transfer. However it isn't required in this sample app. The flow is

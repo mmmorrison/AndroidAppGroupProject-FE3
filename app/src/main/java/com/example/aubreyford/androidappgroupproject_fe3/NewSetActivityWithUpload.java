@@ -51,7 +51,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class NewSetActivity extends AppCompatActivity {
+public class NewSetActivityWithUpload extends AppCompatActivity {
 
     private static Button PicButtonA;
     private static Button PicButtonB;
@@ -59,6 +59,8 @@ public class NewSetActivity extends AppCompatActivity {
 //    private static ImageView picB;
     private static Button submitBtn;
     private static Button backBtn;
+    private Uri uriPicA;
+    private Uri uriPicB;
     String TAG = NewSetActivity.class.getName();
 
     /**
@@ -87,7 +89,7 @@ public class NewSetActivity extends AppCompatActivity {
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
 
-        fetchJsonResponse();
+        // fetchJsonResponse();
     }
 
     @Override
@@ -151,10 +153,10 @@ public class NewSetActivity extends AppCompatActivity {
                 ImageView picB = (ImageView) findViewById(R.id.pic_B);
                 Bitmap bitmapB = ((BitmapDrawable) picB.getDrawable()).getBitmap();
 
-
                 EditText titleObject = (EditText) findViewById(R.id.newTitle);
                 String title = titleObject.getText().toString();
 
+                storeFiles();
 
                 Intent intent = new Intent(view.getContext(), index.class);
                 startActivity(intent);
@@ -223,17 +225,15 @@ public class NewSetActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-      //// us
-      Uri uri = data.getData();
 
-      //// us
         if (requestCode == 1 && resultCode == RESULT_OK) {
             ImageView picA = (ImageView) findViewById(R.id.pic_A);
             Bundle extras = data.getExtras();
             ////try something here
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             picA.setImageBitmap(imageBitmap);
-            
+            Uri uriPicA = data.getData();
+
 
         Log.i(TAG, "************** on A snap");
         }
@@ -243,41 +243,49 @@ public class NewSetActivity extends AppCompatActivity {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             picB.setImageBitmap(imageBitmap);
+            Uri uriPicB = data.getData();
+
             Log.i(TAG, "************** on B snap");
 
         }
+
+    }
+
+    private void storeFiles() {
+      // Upload the files to storage
+      beginUpload(uriPicA);
+      beginUpload(uriPicB);
+
+      // Record the decision in the database for this poster.
+      storeDecision(uriPicA, uriPicB);
+
+    }
+
+    private void beginUpload(String filePath) {
+        if (filePath == null) {
+            Toast.makeText(this, "Could not find the filepath of the selected file",
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        File file = new File(filePath);
+        TransferObserver observer = transferUtility.upload(Constants.BUCKET_NAME, file.getName(),
+        file);
+
+        /*
+         * Note that usually we set the transfer listener after initializing the
+         * transfer. However it isn't required in this sample app. The flow is
+         * click upload button -> start an activity for image selection
+         * startActivityForResult -> onActivityResult -> beginUpload -> onResume
+         * -> set listeners to in progress transfers.
+         */
+        // observer.setTransferListener(new UploadListener());
     }
 
 
-    private void uploadAmazonFiles(Bitmap picABitmap, Bitmap picBBitmap) {
-        long dateTime = (new Date()).getTime();
-
-        String picAFileName = "picA" + dateTime;
-        String picBFileName = "picB" + dateTime;
-
-        AWSCredentials credentials = new BasicAWSCredentials("AKIAID4WIMSMU3GTGDOA","uE1g4OZABni5/bulBf3f68fdXIK9H22H9o+jw63L");
-//        TransferManager manager = new TransferManageranager(credentials);
-//        Upload upload = manager.upload("thisorthatphotofiles", picAFileName, picABitmap);
-//        Upload upload = manager.upload("thisorthatphotofiles", picBFileName, picBBitmap);
-
-        AmazonS3 s3client = new AmazonS3Client(credentials);
-        Log.i(TAG, "in uploadAmazonFiles");
-
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        picABitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
-        byte[] bitmapdata = bos.toByteArray();
-        ByteArrayInputStream bs = new ByteArrayInputStream(bitmapdata);
-
-        ObjectMetadata objectMetadata = new ObjectMetadata();
-
-        s3client.putObject(new PutObjectRequest("thisorthatphotofiles", "AKIAID4WIMSMU3GTGDOA", bs, objectMetadata));
-    }
-
-
-
-    private void fetchJsonResponse() {
+    private void storeDecision(String picAFileName, String picBFileName) {
         // Pass second argument as "null" for GET requests
-        Log.d(TAG, "fetchJsonResponse");
+        Log.d(TAG, "storeDecision");
 
         StringRequest req = new StringRequest(Request.Method.POST,"https://thisorthatdb.herokuapp.com/new",
 
@@ -301,17 +309,14 @@ public class NewSetActivity extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("user_id", "1");
-                params.put("title", "testTitle");
-                params.put("category", "testCategory");
-                params.put("voteA", "1");
-                params.put("voteB", "2");
+                params.put("title", "Title");
+                params.put("category", "none");
+                params.put("voteA", "0");
+                params.put("voteB", "0");
                 params.put("winnerA", "false");
-                params.put("winnerB", "true");
-                params.put("picA", "picA");
-                params.put("picB", "picB");
-                Log.i(TAG, "!!!!!!!!!!!!!!");
-                Log.i(TAG, params.get("picA"));
-                Log.i(TAG, "*******");
+                params.put("winnerB", "false");
+                params.put("picA", picAFileName);
+                params.put("picB", picBFileName);
                 return params;
             }
         };
@@ -320,8 +325,6 @@ public class NewSetActivity extends AppCompatActivity {
         RequestQueue mRequestQueue = Volley.newRequestQueue(this);
         mRequestQueue.add(req);
     }
-
-
 
     @Override
     public void onStart() {
@@ -342,8 +345,6 @@ public class NewSetActivity extends AppCompatActivity {
         );
         AppIndex.AppIndexApi.start(client, viewAction2);
     }
-    //Generate unique filename from date and time
-    // Build filename as "decision" appended with id
-    // Call asynchronous file upload to Amazon with a parameter of this new id.
+
 
 }
