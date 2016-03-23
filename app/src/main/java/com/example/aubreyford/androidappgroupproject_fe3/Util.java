@@ -13,7 +13,7 @@
  * permissions and limitations under the License.
  */
 
-package com.amazonaws.demo.s3transferutility;
+package com.example.aubreyford.androidappgroupproject_fe3;
 
 import android.content.Context;
 import android.net.Uri;

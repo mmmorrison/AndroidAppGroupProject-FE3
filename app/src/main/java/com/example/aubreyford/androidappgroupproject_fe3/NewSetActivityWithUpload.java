@@ -1,10 +1,16 @@
 package com.example.aubreyford.androidappgroupproject_fe3;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.ContentUris;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.DocumentsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -18,14 +24,14 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.amazonaws.auth.AWSCredentials;
-import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.auth.profile.ProfileCredentialsProvider;
-import com.amazonaws.mobileconnectors.s3.transfermanager.TransferManager;
-import com.amazonaws.mobileconnectors.s3.transfermanager.Upload;
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.PutObjectRequest;
+//import com.amazonaws.auth.AWSCredentials;
+//import com.amazonaws.auth.BasicAWSCredentials;
+//import com.amazonaws.auth.profile.ProfileCredentialsProvider;
+//import com.amazonaws.mobileconnectors.s3.transfermanager.TransferManager;
+//import com.amazonaws.mobileconnectors.s3.transfermanager.Upload;
+//import com.amazonaws.services.s3.AmazonS3;
+//import com.amazonaws.services.s3.model.ObjectMetadata;
+//import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -38,8 +44,12 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
-import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.transfer.*;
+//import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferListener;
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferObserver;
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferState;
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferType;
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -47,9 +57,10 @@ import org.json.JSONObject;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.util.Date;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
+
 
 public class NewSetActivityWithUpload extends AppCompatActivity {
 
@@ -71,10 +82,19 @@ public class NewSetActivityWithUpload extends AppCompatActivity {
 //    private static ImageView image_test;
     public RequestQueue mRequestQueue;
 
+    // The TransferUtility is the primary class for managing transfer to S3
+    private TransferUtility transferUtility;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Initializes TransferUtility, always do this before using it.
+          transferUtility = Util.getTransferUtility(this);
+//        checkedIndex = INDEX_NOT_CHECKED;
+//        transferRecordMaps = new ArrayList<HashMap<String, Object>>();
+//        initUI();
 
         setContentView(R.layout.activity_new_set);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -232,7 +252,7 @@ public class NewSetActivityWithUpload extends AppCompatActivity {
             ////try something here
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             picA.setImageBitmap(imageBitmap);
-            Uri uriPicA = data.getData();
+            uriPicA = data.getData();
 
 
         Log.i(TAG, "************** on A snap");
@@ -243,7 +263,7 @@ public class NewSetActivityWithUpload extends AppCompatActivity {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             picB.setImageBitmap(imageBitmap);
-            Uri uriPicB = data.getData();
+            uriPicB = data.getData();
 
             Log.i(TAG, "************** on B snap");
 
@@ -253,15 +273,25 @@ public class NewSetActivityWithUpload extends AppCompatActivity {
 
     private void storeFiles() {
       // Upload the files to storage
-      beginUpload(uriPicA);
-      beginUpload(uriPicB);
+        try {
+            String path = getPath(uriPicA);
+            beginUpload(path);
+        } catch (URISyntaxException e) {
+            Toast.makeText(this,
+                    "Unable to get the file from the given URI.  See error log for details",
+                    Toast.LENGTH_LONG).show();
+            Log.e(TAG, "Unable to upload file from the given uri", e);
+        }
+
+//        beginUpload(uriPicB);
 
       // Record the decision in the database for this poster.
       storeDecision(uriPicA.toString(), uriPicB.toString());
 
     }
 
-    private void beginUpload(Uri filePath) {
+    private void beginUpload(String filePath) {
+
         if (filePath == null) {
             Toast.makeText(this, "Could not find the filepath of the selected file",
                     Toast.LENGTH_LONG).show();
@@ -282,10 +312,92 @@ public class NewSetActivityWithUpload extends AppCompatActivity {
         // observer.setTransferListener(new UploadListener());
     }
 
+    /*
+     * Gets the file path of the given Uri.
+     */
+    @SuppressLint("NewApi")
+    private String getPath(Uri uri) throws URISyntaxException {
+        final boolean needToCheckUri = Build.VERSION.SDK_INT >= 19;
+        String selection = null;
+        String[] selectionArgs = null;
+        // Uri is different in versions after KITKAT (Android 4.4), we need to
+        // deal with different Uris.
+        if (needToCheckUri && DocumentsContract.isDocumentUri(getApplicationContext(), uri)) {
+            if (isExternalStorageDocument(uri)) {
+                final String docId = DocumentsContract.getDocumentId(uri);
+                final String[] split = docId.split(":");
+                return Environment.getExternalStorageDirectory() + "/" + split[1];
+            } else if (isDownloadsDocument(uri)) {
+                final String id = DocumentsContract.getDocumentId(uri);
+                uri = ContentUris.withAppendedId(
+                        Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
+            } else if (isMediaDocument(uri)) {
+                final String docId = DocumentsContract.getDocumentId(uri);
+                final String[] split = docId.split(":");
+                final String type = split[0];
+                if ("image".equals(type)) {
+                    uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+                } else if ("video".equals(type)) {
+                    uri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
+                } else if ("audio".equals(type)) {
+                    uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+                }
+                selection = "_id=?";
+                selectionArgs = new String[] {
+                        split[1]
+                };
+            }
+        }
+        if ("content".equalsIgnoreCase(uri.getScheme())) {
+            String[] projection = {
+                    MediaStore.Images.Media.DATA
+            };
+            Cursor cursor = null;
+            try {
+                cursor = getContentResolver()
+                        .query(uri, projection, selection, selectionArgs, null);
+                int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                if (cursor.moveToFirst()) {
+                    return cursor.getString(column_index);
+                }
+            } catch (Exception e) {
+            }
+        } else if ("file".equalsIgnoreCase(uri.getScheme())) {
+            return uri.getPath();
+        }
+        return null;
+    }
+
+    /**
+     * @param uri The Uri to check.
+     * @return Whether the Uri authority is ExternalStorageProvider.
+     */
+    public static boolean isExternalStorageDocument(Uri uri) {
+        return "com.android.externalstorage.documents".equals(uri.getAuthority());
+    }
+
+    /**
+     * @param uri The Uri to check.
+     * @return Whether the Uri authority is DownloadsProvider.
+     */
+    public static boolean isDownloadsDocument(Uri uri) {
+        return "com.android.providers.downloads.documents".equals(uri.getAuthority());
+    }
+
+    /**
+     * @param uri The Uri to check.
+     * @return Whether the Uri authority is MediaProvider.
+     */
+    public static boolean isMediaDocument(Uri uri) {
+        return "com.android.providers.media.documents".equals(uri.getAuthority());
+    }
 
     private void storeDecision(String picAFileName, String picBFileName) {
         // Pass second argument as "null" for GET requests
         Log.d(TAG, "storeDecision");
+
+        String finalPicAFileName = picAFileName;
+        final String finalPicBFileName = picBFileName;
 
         StringRequest req = new StringRequest(Request.Method.POST,"https://thisorthatdb.herokuapp.com/new",
 
@@ -294,7 +406,7 @@ public class NewSetActivityWithUpload extends AppCompatActivity {
                     public void onResponse(String response) {
                         try {
                             String result = "Your IP Address is " + response;
-                            Toast.makeText(NewSetActivity.this, result, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(NewSetActivityWithUpload.this, result, Toast.LENGTH_SHORT).show();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -307,6 +419,7 @@ public class NewSetActivityWithUpload extends AppCompatActivity {
         }) {
             @Override
             protected Map<String, String> getParams() {
+
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("user_id", "1");
                 params.put("title", "Title");
@@ -315,8 +428,8 @@ public class NewSetActivityWithUpload extends AppCompatActivity {
                 params.put("voteB", "0");
                 params.put("winnerA", "false");
                 params.put("winnerB", "false");
-                params.put("picA", picAFileName);
-                params.put("picB", picBFileName);
+                params.put("picA", finalPicBFileName);
+                params.put("picB", finalPicBFileName);
                 return params;
             }
         };

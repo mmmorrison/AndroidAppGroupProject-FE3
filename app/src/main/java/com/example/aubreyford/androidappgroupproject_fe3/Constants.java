@@ -13,7 +13,7 @@
  * permissions and limitations under the License.
  */
 
-package com.amazonaws.demo.s3transferutility;
+package com.example.aubreyford.androidappgroupproject_fe3;
 
 public class Constants {
 

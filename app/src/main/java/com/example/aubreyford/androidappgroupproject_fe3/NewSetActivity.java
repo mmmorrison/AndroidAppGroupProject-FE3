@@ -39,7 +39,7 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.transfer.*;
+//import com.amazonaws.services.s3;
 
 import org.json.JSONException;
 import org.json.JSONObject;
