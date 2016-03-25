@@ -176,7 +176,7 @@ public class NewSetActivityWithUpload extends AppCompatActivity {
                 EditText titleObject = (EditText) findViewById(R.id.newTitle);
                 String title = titleObject.getText().toString();
 
-                storeFiles();
+                storeFiles(title);
 
                 Intent intent = new Intent(view.getContext(), index.class);
                 startActivity(intent);
@@ -271,22 +271,30 @@ public class NewSetActivityWithUpload extends AppCompatActivity {
 
     }
 
-    private void storeFiles() {
-      // Upload the files to storage
+    private void storeFiles(String title) {
+      // Upload the files to storage - first picture A
         try {
             String path = getPath(uriPicA);
             beginUpload(path);
         } catch (URISyntaxException e) {
             Toast.makeText(this,
-                    "Unable to get the file from the given URI.  See error log for details",
+                    "Unable to get the file for picture A from the given URI.  See error log for details",
                     Toast.LENGTH_LONG).show();
-            Log.e(TAG, "Unable to upload file from the given uri", e);
+            Log.e(TAG, "Unable to upload file A from the given uri", e);
         }
 
-//        beginUpload(uriPicB);
-
+      // Now upload the file to storage for picture B
+      try {
+          String path = getPath(uriPicB);
+          beginUpload(path);
+      } catch (URISyntaxException e) {
+          Toast.makeText(this,
+                  "Unable to get the file for picture B from the given URI.  See error log for details",
+                  Toast.LENGTH_LONG).show();
+          Log.e(TAG, "Unable to upload file B from the given uri", e);
+      }
       // Record the decision in the database for this poster.
-      storeDecision(uriPicA.toString(), uriPicB.toString());
+      storeDecision(title, uriPicA.toString(), uriPicB.toString());
 
     }
 
@@ -392,12 +400,13 @@ public class NewSetActivityWithUpload extends AppCompatActivity {
         return "com.android.providers.media.documents".equals(uri.getAuthority());
     }
 
-    private void storeDecision(String picAFileName, String picBFileName) {
+    private void storeDecision(String title, String picAFileName, String picBFileName) {
         // Pass second argument as "null" for GET requests
         Log.d(TAG, "storeDecision");
 
-        String finalPicAFileName = picAFileName;
+        final String finalPicAFileName = picAFileName;
         final String finalPicBFileName = picBFileName;
+        final String finalTitle = title;
 
         StringRequest req = new StringRequest(Request.Method.POST,"https://thisorthatdb.herokuapp.com/new",
 
@@ -419,10 +428,11 @@ public class NewSetActivityWithUpload extends AppCompatActivity {
         }) {
             @Override
             protected Map<String, String> getParams() {
-
+                // Make sure below that the voteA and voteB do not need
+                // to be sent as integer 0.
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("user_id", "1");
-                params.put("title", "Title");
+                params.put("title", finalTitle);
                 params.put("category", "none");
                 params.put("voteA", "0");
                 params.put("voteB", "0");
