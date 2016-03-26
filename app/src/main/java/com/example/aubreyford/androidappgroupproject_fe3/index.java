@@ -110,7 +110,7 @@ public class index extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), NewSetActivity.class);
                 startActivity(intent);
-
+                finish();
             }
         });
 
