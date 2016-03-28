@@ -39,7 +39,7 @@
 
         </activity>
         <activity
-            android:name=".NewSetActivity"
+            android:name=".OldNewSetActivity"
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
