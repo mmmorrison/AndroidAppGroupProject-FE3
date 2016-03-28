@@ -83,7 +83,7 @@ public class index extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), OldNewSetActivity.class);
                 startActivity(intent);
-
+                finish();
             }
         });
 
@@ -93,6 +93,7 @@ public class index extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), MainActivity.class);
                 startActivity(intent);
+                finish();
 
             }
         });

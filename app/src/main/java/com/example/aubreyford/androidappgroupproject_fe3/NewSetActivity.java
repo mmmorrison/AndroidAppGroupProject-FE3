@@ -168,10 +168,10 @@ public class NewSetActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(view.getContext(), index.class);
                 startActivity(intent);
+                finish();
 
 //                uploadAmazonFiles(bitmapA, bitmapB);
 //                fetchJsonResponse(bitmapA, bitmapB);
-//
 //                        image_test = (ImageView) findViewById(R.id.imageTest);
 //                        image_test.setImageBitmap(bitmapB);
 
@@ -188,6 +188,7 @@ public class NewSetActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), index.class);
                 startActivity(intent);
+                finish();
             }
         });
     }
