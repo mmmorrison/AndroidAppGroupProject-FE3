@@ -81,7 +81,7 @@ public class index extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), OldNewSetActivity.class);
+                Intent intent = new Intent(view.getContext(), NewSetActivity.class);
                 startActivity(intent);
                 finish();
             }
