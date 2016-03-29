@@ -60,7 +60,7 @@ public class NewSetActivity extends AppCompatActivity {
     private static Button backBtn;
     private Uri uriPicA;
     private Uri uriPicB;
-    String TAG = OldNewSetActivity.class.getName();
+    String TAG = NewSetActivity.class.getName();
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -100,46 +100,6 @@ public class NewSetActivity extends AppCompatActivity {
         // fetchJsonResponse();
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "NewSet Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app URL is correct.
-                Uri.parse("android-app://com.example.aubreyford.androidappgroupproject_fe3/http/host/path")
-        );
-        AppIndex.AppIndexApi.end(client, viewAction);
-        Log.i("***", "******************");
-
-        ImageView picA = (ImageView) findViewById(R.id.pic_A);
-        Bitmap bitmapA = ((BitmapDrawable) picA.getDrawable()).getBitmap();
-
-        if (bitmapA != null) {
-            bitmapA.recycle();
-//            bitmapA = null;
-        }
-
-
-        ImageView picB = (ImageView) findViewById(R.id.pic_B);
-        Bitmap bitmapB = ((BitmapDrawable) picB.getDrawable()).getBitmap();
-
-        if (bitmapB != null) {
-            bitmapB.recycle();
-//            bitmapB = null;
-        }
-
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.disconnect();
-    }
 
 
     public void Submit() {
