@@ -121,6 +121,12 @@ public class NewSetActivity extends AppCompatActivity {
                 ImageView picB = (ImageView) findViewById(R.id.pic_B);
                 Bitmap bitmapB = ((BitmapDrawable) picB.getDrawable()).getBitmap();
 
+
+                //
+                //FROM AUBREY: Get bitmapA and bitmapB above and upload directly to AWS here.
+                //
+
+
                 EditText titleObject = (EditText) findViewById(R.id.newTitle);
                 String title = titleObject.getText().toString();
 
@@ -129,6 +135,11 @@ public class NewSetActivity extends AppCompatActivity {
                 Intent intent = new Intent(view.getContext(), index.class);
                 startActivity(intent);
                 finish();
+
+
+
+
+
 
 //                uploadAmazonFiles(bitmapA, bitmapB);
 //                fetchJsonResponse(bitmapA, bitmapB);
@@ -201,7 +212,7 @@ public class NewSetActivity extends AppCompatActivity {
             ////try something here
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             picA.setImageBitmap(imageBitmap);
-            uriPicA = data.getData();
+//            uriPicA = data.getData();
 
 
         Log.i(TAG, "************** on A snap");
@@ -212,7 +223,7 @@ public class NewSetActivity extends AppCompatActivity {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             picB.setImageBitmap(imageBitmap);
-            uriPicB = data.getData();
+//            uriPicB = imageBitmap
 
             Log.i(TAG, "************** on B snap");
 
