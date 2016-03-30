@@ -21,7 +21,7 @@ public class Constants {
      * You should replace these values with your own. See the README for details
      * on what to fill in.
      */
-    public static final String COGNITO_POOL_ID = "us-east-1:6fc2c25b-0e7c-48d6-b1a9-cb4d87dbb622";
+    public static final String COGNITO_POOL_ID = "eu-west-1:b7da9cf4-768b-40fc-bb1f-a99da79f933b";
 
     /*
      * Note, you must first create a bucket using the S3 console before running
@@ -29,4 +29,8 @@ public class Constants {
      * put it's name in the field below.
      */
     public static final String BUCKET_NAME = "thisorthatphotofiles";
+
+//    thisorthatphotofiles.s3-website-us-west-2.amazonaws.com
+
+
 }

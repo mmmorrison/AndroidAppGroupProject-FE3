@@ -238,7 +238,9 @@ public class index extends AppCompatActivity {
 
             @Override
             protected void onPostExecute(HashMap<String, Object> result) {
+                System.out.print(result);
                 String path = (String) result.get("picA");
+
                 int position = (Integer) result.get("positionA");
                 SimpleAdapter adapter = (SimpleAdapter) mListView.getAdapter();
                 HashMap<String, Object> hm = (HashMap<String, Object>) adapter.getItem(position);
