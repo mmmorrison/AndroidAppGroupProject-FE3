@@ -419,9 +419,10 @@ public class NewSetActivity extends AppCompatActivity {
                 params.put("voteB", "0");
                 params.put("winnerA", "false");
                 params.put("winnerB", "false");
-                params.put("picA", finalPicAFileName);
-                params.put("picB", finalPicBFileName);
+                params.put("picA", "https://s3-us-west-2.amazonaws.com/thisorthatphotofiles/" + finalPicAFileName);
+                params.put("picB", "https://s3-us-west-2.amazonaws.com/thisorthatphotofiles/" + finalPicBFileName);
                 return params;
+
             }
         };
 
