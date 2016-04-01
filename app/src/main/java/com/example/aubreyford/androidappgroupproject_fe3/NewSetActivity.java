@@ -45,6 +45,8 @@ import com.amazonaws.mobileconnectors.s3.transferutility.TransferObserver;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
@@ -130,7 +132,7 @@ public class NewSetActivity extends AppCompatActivity {
                 EditText titleObject = (EditText) findViewById(R.id.newTitle);
                 String title = titleObject.getText().toString();
 
-                storeFiles(title);
+                storeFiles(bitmapA, bitmapB, title);
 
                 Intent intent = new Intent(view.getContext(), index.class);
                 startActivity(intent);
@@ -141,10 +143,7 @@ public class NewSetActivity extends AppCompatActivity {
 
 
 
-//                uploadAmazonFiles(bitmapA, bitmapB);
-//                fetchJsonResponse(bitmapA, bitmapB);
-//                        image_test = (ImageView) findViewById(R.id.imageTest);
-//                        image_test.setImageBitmap(bitmapB);
+
 
 
             }
@@ -231,43 +230,48 @@ public class NewSetActivity extends AppCompatActivity {
 
     }
 
-    private void storeFiles(String title) {
+    private void storeFiles(Bitmap bitmapA, Bitmap bitmapB, String title) {
       // Upload the files to storage - first picture A
+        String filenameA = title + "picA";
+        String filenameB = title + "picB";
         try {
-            String path = getPath(uriPicA);
-            beginUpload(path);
-        } catch (URISyntaxException e) {
+//            String path = getPath(uriPicA);
+            beginUpload(bitmapA, filenameA);
+        } catch (Exception e) {
             Toast.makeText(this,
                     "Unable to get the file for picture A from the given URI.  See error log for details",
                     Toast.LENGTH_LONG).show();
-            Log.e(TAG, "Unable to upload file A from the given uri", e);
+            Log.e("storeFiles", "Unable to upload file A from the given uri", e);
         }
 
       // Now upload the file to storage for picture B
       try {
-          String path = getPath(uriPicB);
-          beginUpload(path);
-      } catch (URISyntaxException e) {
+//          String path = getPath(uriPicB);
+          beginUpload(bitmapB, filenameB);
+      } catch (Exception e) {
           Toast.makeText(this,
                   "Unable to get the file for picture B from the given URI.  See error log for details",
                   Toast.LENGTH_LONG).show();
-          Log.e(TAG, "Unable to upload file B from the given uri", e);
+          Log.e("storeFiles", "Unable to upload file B from the given uri", e);
       }
       // Record the decision in the database for this poster.
-      storeDecision(title, uriPicA.toString(), uriPicB.toString());
+      storeDecision(title, filenameA, filenameB);
 
     }
 
-    private void beginUpload(String filePath) {
+    private void beginUpload(Bitmap bitmap, String filename) {
 
-        if (filePath == null) {
+
+        if (filename == null) {
             Toast.makeText(this, "Could not find the filepath of the selected file",
                     Toast.LENGTH_LONG).show();
             return;
         }
 
-        File file = new File(filePath);
-        TransferObserver observer = transferUtility.upload(Constants.BUCKET_NAME, file.getName(),
+        File file;
+        System.out.println("!!!!!!!!! File path to save in Amazon");
+        file = persistImage(bitmap, filename);
+        TransferObserver observer = transferUtility.upload(Constants.BUCKET_NAME, filename,
         file);
 
         /*
@@ -278,6 +282,23 @@ public class NewSetActivity extends AppCompatActivity {
          * -> set listeners to in progress transfers.
          */
         // observer.setTransferListener(new UploadListener());
+    }
+
+    private File persistImage(Bitmap bitmap, String name) {
+        File filesDir = getApplicationContext().getFilesDir();
+        File imageFile = new File(filesDir, name + ".jpg");
+
+        OutputStream os;
+        try {
+            os = new FileOutputStream(imageFile);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, os);
+            os.flush();
+            os.close();
+        } catch (Exception e) {
+            Log.e("persistImage", "Error writing bitmap", e);
+        }
+        return imageFile;
+
     }
 
     /*
@@ -398,9 +419,10 @@ public class NewSetActivity extends AppCompatActivity {
                 params.put("voteB", "0");
                 params.put("winnerA", "false");
                 params.put("winnerB", "false");
-                params.put("picA", finalPicBFileName);
-                params.put("picB", finalPicBFileName);
+                params.put("picA", "https://s3-us-west-2.amazonaws.com/thisorthatphotofiles/" + finalPicAFileName);
+                params.put("picB", "https://s3-us-west-2.amazonaws.com/thisorthatphotofiles/" + finalPicBFileName);
                 return params;
+
             }
         };
 
