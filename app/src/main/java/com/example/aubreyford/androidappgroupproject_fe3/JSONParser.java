@@ -63,8 +63,9 @@ public class JSONParser {
         mDecision.put("category", category);
         mDecision.put("picA_Url", picA_Url);
         mDecision.put("picB_Url", picB_Url);
-            mDecision.put("picA", R.mipmap.ic_launcher);  //making a spot for actual img files
-            mDecision.put("picB", R.mipmap.ic_launcher);  //making a spot for actual img files
+
+            mDecision.put("picA", "" );  //making a spot for actual img files
+            mDecision.put("picB", "");  //making a spot for actual img files
 
         }catch(JSONException e){
             e.printStackTrace();

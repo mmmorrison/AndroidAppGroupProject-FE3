@@ -35,18 +35,7 @@ public class DecideActivity extends AppCompatActivity {
 
 
     private void DecideNavListener() {
-        decide_back = (Button) findViewById(R.id.decide_back);
         decide_skip = (Button) findViewById(R.id.decide_skip );
-
-        decide_back.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
 
         decide_skip.setOnClickListener(new View.OnClickListener() {
 

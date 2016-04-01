@@ -41,13 +41,7 @@
         android:text="New Qualm"
         android:id="@+id/new_qualm"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true" />
-
-    <Button
-        android:layout_width="150dp"
-        android:layout_height="60dp"
-        android:text="Back"
-        android:id="@+id/index_back"
-        android:layout_alignParentBottom="true"
+        android:layout_alignEnd="@+id/list"
         android:layout_alignParentStart="true" />
+
 </RelativeLayout>

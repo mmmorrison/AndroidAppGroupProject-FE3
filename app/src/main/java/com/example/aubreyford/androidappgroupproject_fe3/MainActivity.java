@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
                         public void onClick(View view) {
                             Intent intent = new Intent(view.getContext(), index.class);
                             startActivity(intent);
-                            finish();
                         }
             });
         }
@@ -65,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
 //                            Intent intent = new Intent("com.example.aubreyford.androidappgroupproject_fe3.DecideActivity");
                             Intent intent = new Intent(view.getContext(), DecideActivity.class);
                             startActivity(intent);
-                            finish();
                         }
 
             });

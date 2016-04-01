@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.util.Log;
 import android.view.View;
@@ -75,7 +77,6 @@ public class index extends AppCompatActivity {
 
     public void NewSetNavListener() {
         newQualm = (Button) findViewById(R.id.new_qualm);
-        indexBack = (Button) findViewById(R.id.index_back);
 
         newQualm.setOnClickListener(new View.OnClickListener() {
 
@@ -83,18 +84,6 @@ public class index extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), NewSetActivity.class);
                 startActivity(intent);
-                finish();
-            }
-        });
-
-        indexBack.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), MainActivity.class);
-                startActivity(intent);
-                finish();
-
             }
         });
     }
@@ -138,19 +127,19 @@ public class index extends AppCompatActivity {
         }
     }
 
-    private class ListViewLoaderTask extends AsyncTask<String, Void, SimpleAdapter> {
+    private class ListViewLoaderTask extends AsyncTask<String, Void, ListAdapter> {
         JSONObject resultObject;
         JSONArray decisionsArray;
 
         @Override
-        protected SimpleAdapter doInBackground(String... strJson){
+        protected ListAdapter doInBackground(String... strJson){
 
             try {
                 resultObject = new JSONObject(strJson[0]);
                 decisionsArray = resultObject.getJSONArray("decisions");
 
             }catch(Exception e){
-                Log.i("*****", "SimpleAdapterFAILB");
+                Log.i("*****", "AdapterFAILB");
                 Log.d("***ListViewLoaderTask", e.toString());
             }
 
@@ -160,19 +149,23 @@ public class index extends AppCompatActivity {
             try {
                 decisionList = theParseMaster.parse(decisionsArray);
             }catch(Exception e){
-                Log.i("*****", "SimpleAdapterFAILB");
+                Log.i("*****", "" +
+                        "AdapterFAILB");
                 Log.d("***Parsing", e.toString());
             }
 
-            String[] from = {"title", "picA", "picB", "id"};
-            int[] to = {R.id.title, R.id.pic_A, R.id.pic_B, R.id.row_delete};
-            SimpleAdapter adapter = new SimpleAdapter(getBaseContext(), decisionList, R.layout.row, from, to);
+            ListAdapter adapter = new CustomAdapter(getBaseContext(), decisionList);
+
+
+//            String[] from = {"title", "picA", "picB", "id"};
+//            int[] to = {R.id.title, R.id.pic_A, R.id.pic_B, R.id.row_delete};
+//            SimpleAdapter adapter = new SimpleAdapter(getBaseContext(), decisionList, R.layout.row, from, to);
 
             return adapter;
         }
 
         @Override
-        protected void onPostExecute(SimpleAdapter adapter) {
+        protected void onPostExecute(ListAdapter adapter) {
 
             mListView.setAdapter(adapter);
 
@@ -184,7 +177,6 @@ public class index extends AppCompatActivity {
                 String picB_Url = (String) hm.get("picB_Url");
                 ImageLoaderTaskA imageLoaderTaskA = new ImageLoaderTaskA();
                 ImageLoaderTaskB imageLoaderTaskB = new ImageLoaderTaskB();
-
 
                 HashMap<String, Object> hmDownload = new HashMap<String, Object>(); //extraneous?
 
@@ -226,6 +218,7 @@ public class index extends AppCompatActivity {
                     fOutStream.close();
                     HashMap<String, Object> hmBitmap = new HashMap<String, Object>();
                     hmBitmap.put("picA", tmpFile.getPath());
+                    Log.i("***************PATH", tmpFile.getPath());
                     hmBitmap.put("positionA", position);
                     return hmBitmap;
 
@@ -242,7 +235,7 @@ public class index extends AppCompatActivity {
                 String path = (String) result.get("picA");
 
                 int position = (Integer) result.get("positionA");
-                SimpleAdapter adapter = (SimpleAdapter) mListView.getAdapter();
+                CustomAdapter adapter = (CustomAdapter) mListView.getAdapter();
                 HashMap<String, Object> hm = (HashMap<String, Object>) adapter.getItem(position);
                 hm.put("picA", path);
                 adapter.notifyDataSetChanged();
@@ -291,7 +284,7 @@ public class index extends AppCompatActivity {
             protected void onPostExecute(HashMap<String, Object> result) {
                 String path = (String) result.get("picB");
                 int position = (Integer) result.get("positionB");
-                SimpleAdapter adapter = (SimpleAdapter) mListView.getAdapter();
+                CustomAdapter adapter = (CustomAdapter) mListView.getAdapter();
                 HashMap<String, Object> hm = (HashMap<String, Object>) adapter.getItem(position);
                 hm.put("picB", path);
                 adapter.notifyDataSetChanged();
