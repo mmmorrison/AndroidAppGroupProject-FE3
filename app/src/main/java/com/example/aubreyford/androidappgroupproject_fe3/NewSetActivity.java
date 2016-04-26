@@ -93,7 +93,6 @@ public class NewSetActivity extends AppCompatActivity {
         TakePicA();
         TakePicB();
         Submit();
-        Back();
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -133,32 +132,6 @@ public class NewSetActivity extends AppCompatActivity {
                 String title = titleObject.getText().toString();
 
                 storeFiles(bitmapA, bitmapB, title);
-
-                Intent intent = new Intent(view.getContext(), index.class);
-                startActivity(intent);
-                finish();
-
-
-
-
-
-
-
-
-
-            }
-        });
-    }
-
-    public void Back() {
-        backBtn = (Button) findViewById(R.id.new_back);
-
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), index.class);
-                startActivity(intent);
-                finish();
             }
         });
     }
@@ -397,6 +370,7 @@ public class NewSetActivity extends AppCompatActivity {
                         try {
                             String result = "Your IP Address is " + response;
                             Toast.makeText(NewSetActivity.this, result, Toast.LENGTH_SHORT).show();
+                            finish();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
