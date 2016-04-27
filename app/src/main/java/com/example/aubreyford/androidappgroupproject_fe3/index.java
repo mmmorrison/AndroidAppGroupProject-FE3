@@ -1,39 +1,35 @@
 package com.example.aubreyford.androidappgroupproject_fe3;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.lang.String;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import android.app.ProgressDialog;
-import android.widget.SimpleAdapter;
-
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
 
 
 public class index extends AppCompatActivity {
@@ -58,22 +54,22 @@ public class index extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        ///////////////////////////////////////////////////
-
-        new JSONAsyncTask().execute("https://thisorthatdb.herokuapp.com/posters/decisions");
-        mListView = (ListView)findViewById(R.id.list);
-
-        ///////////////////////////////////////////////////
-
-
 
         NewSetNavListener();
+
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
 
+        new JSONAsyncTask().execute("https://thisorthatdb.herokuapp.com/posters/decisions");
+        mListView = (ListView)findViewById(R.id.list);
+
+    }
 
     public void NewSetNavListener() {
         newQualm = (Button) findViewById(R.id.new_qualm);
