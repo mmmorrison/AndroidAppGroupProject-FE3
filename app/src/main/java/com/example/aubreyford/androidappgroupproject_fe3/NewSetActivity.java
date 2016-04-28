@@ -1,34 +1,27 @@
 package com.example.aubreyford.androidappgroupproject_fe3;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.ContentUris;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.DocumentsContract;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.provider.MediaStore;
-import android.graphics.Bitmap;
-import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-//import com.amazonaws.auth.AWSCredentials;
-//import com.amazonaws.auth.BasicAWSCredentials;
-//import com.amazonaws.auth.profile.ProfileCredentialsProvider;
-//import com.amazonaws.mobileconnectors.s3.transfermanager.TransferManager;
-//import com.amazonaws.mobileconnectors.s3.transfermanager.Upload;
-//import com.amazonaws.services.s3.AmazonS3;
-//import com.amazonaws.services.s3.model.ObjectMetadata;
-//import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferObserver;
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -40,10 +33,6 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
-//import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.mobileconnectors.s3.transferutility.TransferObserver;
-import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
@@ -51,8 +40,18 @@ import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
+//import com.amazonaws.auth.AWSCredentials;
+//import com.amazonaws.auth.BasicAWSCredentials;
+//import com.amazonaws.auth.profile.ProfileCredentialsProvider;
+//import com.amazonaws.mobileconnectors.s3.transfermanager.TransferManager;
+//import com.amazonaws.mobileconnectors.s3.transfermanager.Upload;
+//import com.amazonaws.services.s3.AmazonS3;
+//import com.amazonaws.services.s3.model.ObjectMetadata;
+//import com.amazonaws.services.s3.model.PutObjectRequest;
+//import com.amazonaws.services.s3.AmazonS3Client;
 
-public class NewSetActivity extends AppCompatActivity {
+
+public class NewSetActivity extends Activity {
 
     private static Button PicButtonA;
     private static Button PicButtonB;
@@ -87,13 +86,12 @@ public class NewSetActivity extends AppCompatActivity {
 //        initUI();
 
         setContentView(R.layout.activity_new_set);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
 
         TakePicA();
         TakePicB();
         Submit();
-        Back();
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -124,41 +122,10 @@ public class NewSetActivity extends AppCompatActivity {
                 Bitmap bitmapB = ((BitmapDrawable) picB.getDrawable()).getBitmap();
 
 
-                //
-                //FROM AUBREY: Get bitmapA and bitmapB above and upload directly to AWS here.
-                //
-
-
                 EditText titleObject = (EditText) findViewById(R.id.newTitle);
                 String title = titleObject.getText().toString();
 
                 storeFiles(bitmapA, bitmapB, title);
-
-                Intent intent = new Intent(view.getContext(), index.class);
-                startActivity(intent);
-                finish();
-
-
-
-
-
-
-
-
-
-            }
-        });
-    }
-
-    public void Back() {
-        backBtn = (Button) findViewById(R.id.new_back);
-
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), index.class);
-                startActivity(intent);
-                finish();
             }
         });
     }
@@ -397,6 +364,7 @@ public class NewSetActivity extends AppCompatActivity {
                         try {
                             String result = "Your IP Address is " + response;
                             Toast.makeText(NewSetActivity.this, result, Toast.LENGTH_SHORT).show();
+                            finish();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

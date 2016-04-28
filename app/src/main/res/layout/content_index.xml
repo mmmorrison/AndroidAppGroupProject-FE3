@@ -17,7 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Your Decisions"
+        android:text="Your Quandaries"
         android:id="@+id/your_decisions"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
@@ -38,7 +38,7 @@
     <Button
         android:layout_width="150dp"
         android:layout_height="60dp"
-        android:text="New Qualm"
+        android:text="New Quandary"
         android:id="@+id/new_qualm"
         android:layout_alignParentBottom="true"
         android:layout_alignEnd="@+id/list"

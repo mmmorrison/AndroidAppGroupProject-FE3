@@ -14,12 +14,14 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/brand_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
+        android:theme="@style/Base.Theme.AppCompat"
         android:largeHeap="true">
 
         <activity
             android:name=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+
+            android:screenOrientation="portrait"
+            >
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,18 +31,21 @@
 
         </activity>
         <activity
+            android:screenOrientation="portrait"
             android:name=".index"
-            android:theme="@style/AppTheme.NoActionBar">
+            >
 
         </activity>
         <activity
+            android:screenOrientation="portrait"
             android:name=".DecideActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            >
 
         </activity>
         <activity
+            android:screenOrientation="portrait"
             android:name=".NewSetActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            >
 
         </activity><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
