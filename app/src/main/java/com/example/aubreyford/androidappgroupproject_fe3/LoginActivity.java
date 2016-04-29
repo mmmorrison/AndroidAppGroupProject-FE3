@@ -5,8 +5,10 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.LoaderManager.LoaderCallbacks;
+import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -27,17 +29,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -298,6 +298,8 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
         private final String mEmail;
         private final String mPassword;
+        SharedPreferences sharedPref = getSharedPreferences("quandry", Context.MODE_PRIVATE);
+        SharedPreferences.Editor sharedEditor = sharedPref.edit();
 
         UserLoginTask(String email, String password) {
             mEmail = email;
@@ -308,38 +310,34 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
 
+            try {
 
+                RequestBody formBody = new FormBody.Builder()
+                        .add("email", mEmail)
+                        .add("tel", mPassword)
+                        .build();
 
-            RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
-            StringRequest sr = new StringRequest(Request.Method.POST,"http://api.someservice.com/post/comment", new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
+                OkHttpClient client = new OkHttpClient();
 
+                Request request = new Request.Builder()
+                        .url("https://thisorthatdb.herokuapp.com/users/register")
+                        .post(formBody)
+                        .build();
+                Response okResponse = client.newCall(request).execute();
 
+                int responseInt = Integer.parseInt(okResponse.body().string());
+
+                if(responseInt == -1){
+                    return false;
+                }else{
+                    sharedEditor.putInt("user", responseInt);
+                    sharedEditor.apply();
                 }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
 
+            }catch(IOException e){
+                return false;
+            }
 
-                }
-            }) {
-                @Override
-                protected Map<String, String> getParams() {
-                    Map<String, String> params = new HashMap<String, String>();
-                    params.put("email", mEmail);
-                    params.put("password", mPassword);
-
-                    return params;
-                }
-            };
-
-
-
-
-
-
-            // TODO: register the new account here.
             return true;
         }
 
