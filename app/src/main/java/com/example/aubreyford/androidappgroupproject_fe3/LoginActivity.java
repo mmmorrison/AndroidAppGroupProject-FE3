@@ -19,6 +19,7 @@ import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -308,25 +309,28 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
 
             try {
 
                 RequestBody formBody = new FormBody.Builder()
-                        .add("email", mEmail)
-                        .add("tel", mPassword)
+                        .add("name", mEmail)
+                        .add("password", mPassword)
                         .build();
 
+                Log.i("******************asdf", "asdf");
                 OkHttpClient client = new OkHttpClient();
 
                 Request request = new Request.Builder()
-                        .url("https://thisorthatdb.herokuapp.com/users/register")
+                        .url("http://thisorthatdb.herokuapp.com/users/register")
                         .post(formBody)
                         .build();
-                Response okResponse = client.newCall(request).execute();
 
-                int responseInt = Integer.parseInt(okResponse.body().string());
+                Response response = client.newCall(request).execute();
+                Log.i("********response****", String.valueOf(response));
+                if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
 
+                int responseInt = Integer.parseInt(response.body().string());
+                Log.i("******IO-me", String.valueOf(responseInt));
                 if(responseInt == -1){
                     return false;
                 }else{
@@ -335,10 +339,14 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                 }
 
             }catch(IOException e){
+
+                Log.i("***********IO-me-2", "IOException");
                 return false;
+
             }
 
             return true;
+
         }
 
         @Override
