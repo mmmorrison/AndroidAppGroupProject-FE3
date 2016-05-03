@@ -313,7 +313,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             try {
 
                 RequestBody formBody = new FormBody.Builder()
-                        .add("name", mEmail)
+                        .add("email", mEmail)
                         .add("password", mPassword)
                         .build();
 
